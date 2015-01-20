@@ -18,8 +18,8 @@ What happens is:
       [lxc-create(1)](http://lxc.sourceforge.net/man/lxc-create.html)
     * start the container with
       [lxc-start(1)](http://lxc.sourceforge.net/man/lxc-start.html)
-    * initialize the container (through sysconf)
-    * run [/usr/bin/gitted](tree/usr/bin/gitted) _git-remote-command_
+    * initialize the container (through [Sysconf](https://github.com/geonef/sysconf.base))
+    * run "_[/usr/bin/gitted](tree/usr/bin/gitted) git-remote-command_"
       inside the container, which does the rest:
         * export some machine state through into GIT commits
         * execute the requested git remote command (_git-receive-pack_
@@ -32,7 +32,8 @@ Import/export is about:
   [PUSH](tree/usr/share/gitted/import/mongodb) and
   [PULL](tree/usr/share/gitted/export/mongodb) support
 * PostgreSQL data:
-  [PUSH](tree/usr/share/gitted/import/postgresql) support
+  [PUSH](tree/usr/share/gitted/import/postgresql) and
+  [PULL](tree/usr/share/gitted/export/postgresql) support
 * MySQL data:
   [PUSH](tree/usr/share/gitted/import/mysql) and
   [PULL](tree/usr/share/gitted/export/mysql) support
