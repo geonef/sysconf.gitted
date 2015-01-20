@@ -7,8 +7,9 @@ Useful links:
 A [Gitted](https://github.com/geonef/sysconf.gitted)-powered Git
 repository enables you to easily:
 
-* build the LXC container to run the service: for example, a MediaWiki
-  repository will build a fully configured MediaWiki server app.
+* build the LXC container to run the service: for example, a 
+  [MediaWiki repository](https://github.com/geonef/sysconf.gitted.mediawiki)
+  will build a fully configured MediaWiki server app.
   
 * fetch data updates of the service using ```git fetch```
 
