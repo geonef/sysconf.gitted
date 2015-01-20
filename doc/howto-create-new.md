@@ -122,7 +122,7 @@ For example, [sysconf.gitted.redmine](https://github.com/geonef/sysconf.gitted.r
 
 Another example is [sysconf.gitted.tt-rss](https://github.com/geonef/sysconf.gitted.tt-rss) which also uses [sysconf.gitted.postgresql](https://github.com/geonef/sysconf.gitted.postgresql).
 
-#### 
+#### Patch container B from A back and forth
 
 Here is how to take the specific ```sysconf.gitted.redmine``` profile out of ```<container-A>``` and merge it into ```<container-B>```:
 ```
