@@ -122,6 +122,30 @@ For example, [sysconf.gitted.redmine](https://github.com/geonef/sysconf.gitted.r
 
 Another example is [sysconf.gitted.tt-rss](https://github.com/geonef/sysconf.gitted.tt-rss) which also uses [sysconf.gitted.postgresql](https://github.com/geonef/sysconf.gitted.postgresql).
 
+#### 
+
+Here is how to take the specific ```sysconf.gitted.redmine``` profile out of ```<container-A>``` and merge it into ```<container-B>```:
+```
+git fetch <container-A>
+git checkout -b tmp <container-A>/master
+git subtree split -P sysconf/sysconf.gitted.redmine -b sysconf-redmine
+git fetch <container-B>
+git checkout -b tmp2 <container-B>/master
+git subtree merge -P sysconf/sysconf.gitted.redmine sysconf-redmine
+git push <container-B> tmp2:master
+```
+
+If ```<container-B>``` had changed as well, to integrate the merge back to ```<container-A>```:
+```
+git branch -d sysconf-redmine
+git subtree split -P sysconf/sysconf.gitted.redmine -b sysconf-redmine
+git checkout tmp
+git subtree merge -P sysconf/sysconf.gitted.redmine sysconf-redmine
+git push <container-A> tmp:master
+```
+
+#### Sync with GitHub
+
 Here in 4 commands, we :
 * pull updates from the container itself
 * pull remote updates from Github and merge them
