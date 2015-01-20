@@ -6,7 +6,6 @@
 #   20140818 first version by JF Gigand <jf@geonef.fr>
 
 nef_command_name=gitted-client
-# . $(dirname $0)/../share/nef-common/shell-command || exit 2
 gitted_executive_treeish=
 
 ######################################################################
