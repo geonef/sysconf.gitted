@@ -71,7 +71,7 @@ gitted_command_add() {
 
     local _branch_name=$(git symbolic-ref --short HEAD 2>/dev/null)
     if [ -n "$_branch_name" ]; then
-        _branch_name="$_branch_name # or another branch"
+        _branch_name="$_branch_name"
     else
         _branch_name="<branch>"
     fi
