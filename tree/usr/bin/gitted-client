@@ -385,7 +385,20 @@ gitted_container_apply_customs() {
             -- sh -c 'mkdir -p /root/.ssh && cat >/root/.ssh/authorized_keys'
     fi
 
-    # TODO: set GIT config for user.name and user.email
+    # Set GIT config for user.name and user.email
+    local _git_user_name=$(git config --get user.name)
+    local _git_user_email=$(git config --get user.email)
+    if [ -n "$_git_user_name" -a -n "$_git_user_name" ]; then
+        nef_log "set container Git username to '$_git_user_name' and email to '$_git_user_email'"
+        cat <<EOF | lxc-attach --clear-env -n $_name -- sh -c "cat >>/root/.gitconfig"
+[user]
+	name = ${_git_user_name}
+	email = ${_git_user_email}
+EOF
+
+        # lxc-attach --clear-env -n $_name -- git config --global user.name "$_git_user_name"
+        # lxc-attach --clear-env -n $_name -- git config --global user.email "$_git_user_email"
+    fi
 }
 
 gitted_lxc_state() {
