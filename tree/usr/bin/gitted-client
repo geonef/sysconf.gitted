@@ -106,7 +106,7 @@ gitted_command_handle-remote-protocol() {
 
     gitted_ensure_container_running "$_name"
 
-    nef_log "Forwarding command '$_command' to gitted in container '$_name'..."
+    nef_log -v "Forwarding command '$_command' to gitted in container '$_name'..."
     lxc-attach --clear-env -n $_name -- gitted git-remote-command $_command
     local _ip=$(lxc-info -H -n $_name -i)
     nef_log "Container IP address: $_ip"
@@ -295,7 +295,7 @@ gitted_ensure_container_running() {
     _name="$1"
     state=$(gitted_lxc_state $_name)
 
-    nef_log "Container '$_name' is '$state'"
+    nef_log -v "Container '$_name' is '$state'"
 
     if [ $state = MISSING ]; then
         # [ -d "$engine_dir" ] || nef_fatal "container cannot be created as engine dir is not available: $engine_dir"
@@ -342,7 +342,7 @@ gitted_ensure_container_running() {
     if [ $state = STOPPED ]; then
         nef_log "Starting container in daemon mode..."
         lxc-start -n $_name -d
-        nef_log "Waiting for a few seconds to let it be ready..."
+        nef_log -v "Waiting for a few seconds to let it be ready..."
         sleep 3
 
 
