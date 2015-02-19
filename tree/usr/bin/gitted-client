@@ -91,6 +91,7 @@ gitted_command_handle-remote-protocol() {
     while [ -n "$1" ]; do
         case "$1" in
             --tree) gitted_executive_treeish=$2; shift; shift ;;
+            --lxc-create-opts) gitted_lxc_create_opts="$2"; shift; shift ;;
             -h|--help) gitted_command_help handle-remote-protocol; return ;;
             -*) gitted_eval_common_option "$1"; shift ;;
             *) _argv=("${_argv[@]}" "$1"); shift ;;
@@ -312,8 +313,12 @@ gitted_ensure_container_running() {
         #     # https://www.mail-archive.com/lxc-users@lists.linuxcontainers.org/msg01894.html
         # fi
 
-        nef_log "LXC container '$_name' does not exist. Creating one with distrib '$distrib', release '$release'..."
-        lxc-create -n $_name -t download -- -d $distrib -r $release -a amd64 $options >&2 \
+        nef_log "Creating LXC container '$_name' with distrib '$distrib', release '$release'..."
+        if [ -n "$gitted_lxc_create_opts" ]; then
+            nef_log -v "lxc-create extra options: $gitted_lxc_create_opts"
+        fi
+        lxc-create -n $_name $gitted_lxc_create_opts \
+            -t download -- -d $distrib -r $release -a amd64 $options >&2 \
             || nef_fatal "lxc-create failed"
         state=STOPPED
 
@@ -402,13 +407,7 @@ EOF
 }
 
 gitted_lxc_state() {
-    state=$(lxc-info -sHn $1 | head -n 1)
-    [ -z "$state" ] && state=MISSING
-    echo $state
-}
-
-gitted_lxc_state() {
-    state=$(lxc-info -sHn $1 | head -n 1)
+    state=$(lxc-info -sHn $1 2>/dev/null | head -n 1)
     [ -z "$state" ] && state=MISSING
     echo $state
 }
