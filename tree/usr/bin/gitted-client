@@ -323,7 +323,7 @@ gitted_ensure_container_running() {
             nef_log -v "lxc-create extra options: $gitted_lxc_create_opts"
         fi
         NEF_LOG_NO_PREFIX=yes lxc-create -n $_name $gitted_lxc_create_opts \
-            -t download -- -d $distrib -r $release -a amd64 $options >&2 \
+            -t download -- -d $distrib -r $release -a amd64 $options \
             2>&1 | nef_log_pipe "lxc-create:" \
             || nef_fatal "lxc-create failed"
         state=STOPPED
@@ -498,7 +498,8 @@ nef_log() {
 
     local txt="$*"
     local line="$*"
-    local prefix=$(basename $0)
+    local prefix="$NEF_LOG_PREFIX"
+    [ -z "$prefix" -a "$NEF_LOG_NO_PREFIX" != yes ] && prefix=$(basename $0)
 
     if [ "x$NEF_LOG_DATE" = xyes ]; then
         date="`date +'%Y-%m-%d %H:%M:%S:%N' | sed -E 's/.{6}$//'`"
