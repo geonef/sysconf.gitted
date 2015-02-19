@@ -500,13 +500,14 @@ nef_log() {
     local line="$*"
     local prefix="$NEF_LOG_PREFIX"
     [ -z "$prefix" -a "$NEF_LOG_NO_PREFIX" != yes ] && prefix=$(basename $0)
+    [ -n "$prefix" -a "$NEF_LOG_PREFIX_NOCOLUMN" != yes ] && prefix="${prefix}: "
 
     if [ "x$NEF_LOG_DATE" = xyes ]; then
         date="`date +'%Y-%m-%d %H:%M:%S:%N' | sed -E 's/.{6}$//'`"
         prefix="$prefix $date"
     fi
 
-    line="$prefix: ${_opt_prepend}${line}"
+    line="${prefix}${_opt_prepend}${line}"
 
     if [ "$NEF_LOG_FILE" = "" ]; then
         echo "$line" >&2
