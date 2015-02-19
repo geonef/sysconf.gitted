@@ -69,16 +69,21 @@ gitted_command_add() {
         "${args[@]}"
     fi
 
+    local _gitted_branch_name=master
     local _branch_name=$(git symbolic-ref --short HEAD 2>/dev/null)
     if [ -n "$_branch_name" ]; then
-        _branch_name="$_branch_name"
+        # _branch_name="$_branch_name"
+        if [ "$_branch_name" != "$_gitted_branch_name" ]; then
+            _branch_name="$_branch_name:master"
+
+        fi
     else
         _branch_name="<branch>"
     fi
     echo
     echo "You may now run:"
     echo -e "\tgit push $_name $_branch_name"
-    echo -e "\tgit pull $_name $_branch_name"
+    echo -e "\tgit pull $_name $_gitted_branch_name"
 }
 
 # command: handle-remote-protocol <name> <remote-command>
